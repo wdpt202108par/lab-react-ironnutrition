@@ -11,7 +11,10 @@ import Foodbox from './components/Foodbox'
 function App() {
   return (
     <div className="App">
-      <Foodbox name="Pizza" image="https://i.imgur.com/eTmWoAN.png" calories={400} />
+      {json.map(food => (
+        <Foodbox key={food.name} name={food.name} image={food.image} calories={food.calories} />
+      ))}
+      
     </div>
   );
 }
