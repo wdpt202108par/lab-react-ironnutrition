@@ -39,7 +39,7 @@ class Foodbox extends React.Component {
                 />
               </div>
               <div className="control">
-                <button className="button is-info">
+                <button className="button is-info" onClick={(ev) => this.props.onChart({name: name, qty: this.state.qty})}>
                   +
                 </button>
               </div>

@@ -14,7 +14,8 @@ class App extends React.Component {
   state = {
     foods: json,
     addingFood: false,
-    query: ''
+    query: '',
+    chart: [] // [ {name: 'Pizza', qty: 3} ]
   }
 
   addFood = (newFood) => {
@@ -29,6 +30,31 @@ class App extends React.Component {
   handleQuery = (ev) => {
     this.setState({
       query: ev.target.value
+    })
+  }
+
+  // funtion to add an item to `chart` state
+  addToChart = (newItem) => {
+    const chartCopy = [...this.state.chart];
+
+    //
+    // 1. search the presence of already present newItem
+    //    - if found: splice it, make a copy, add qty to previous one, push it
+    //    - otherwise, just push it
+    //
+
+    const itemIndex = this.state.chart.findIndex(item => item.name === newItem.name)
+    if (itemIndex >= 0) {
+      chartCopy.splice(itemIndex, 1);
+      const itemCopy = {...this.state.chart[itemIndex]}
+      itemCopy.qty += newItem.qty;
+      chartCopy.push(itemCopy);
+    } else {
+      chartCopy.push(newItem)
+    }
+
+    this.setState({
+      chart: chartCopy
     })
   }
 
@@ -54,8 +80,21 @@ class App extends React.Component {
 
   
         {foods.map(food => (
-          <Foodbox key={food.name} name={food.name} image={food.image} calories={food.calories} />
+          <Foodbox key={food.name} onChart={this.addToChart} name={food.name} image={food.image} calories={food.calories} />
         ))}
+
+        <h2>Today's food</h2>
+        <ul>
+        {this.state.chart.map(item => {
+          // retrieve the food with that name
+          const food = foods.find(food => food.name === item.name)
+          return (
+            <li key={item.name}>
+              {food.name} x{item.qty}
+            </li>
+          )
+        })}
+        </ul>
         
       </div>
     );
