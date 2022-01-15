@@ -1,44 +1,65 @@
 import React from 'react';
+import AddFood from '../addfood/AddFood';
 import foods from "../foods.json"
 import "bulma/css/bulma.css";
 
 
-function FoodBox(props) {
-  return (
-    foods.map((food, idx) => {
-      return(
-        <div key={idx} className="box">
-          <article className="media">
-            <div className="media-left">
-              <figure className="image is-64x64">
-                <img src={food.image} alt={food.name} />
-              </figure>
-            </div>
-            <div className="media-content">
-              <div className="content">
-                <p>
-                  <strong>{food.name}</strong> <br />
-                  <small>{food.calories} cal</small>
-                </p>
-              </div>
-            </div>
-            <div className="media-right">
-              <div className="field has-addons">
-                <div className="control">
-                  <input className="input" type="number" value={food.quantity} />
-                </div>
-                <div className="control">
-                  <button className="button is-info">
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      );
+class FoodBox extends React.Component {
+  state = {
+    addButtonClicked: false,
+    foods: foods
+  }
+
+  addFoodHandler = (newFood) => {
+    const foodsCopy = [...this.state.foods, newFood];
+
+    this.setState({
+      addButtonClicked: false,
+      foods: foodsCopy
     })
-  );
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState({ addButtonClicked: !this.state.addButtonClicked })}>Add food</button>
+        {this.state.addButtonClicked && <AddFood addFood={this.addFoodHandler} />}
+
+        {this.state.foods.map((food, idx) => {
+        return(
+          <div key={idx} className="box">
+            <article className="media">
+              <div className="media-left">
+                <figure className="image is-64x64">
+                  <img src={food.image} alt={food.name} />
+                </figure>
+              </div>
+              <div className="media-content">
+                <div className="content">
+                  <p>
+                    <strong>{food.name}</strong> <br />
+                    <small>{food.calories} cal</small>
+                  </p>
+                </div>
+              </div>
+              <div className="media-right">
+                <div className="field has-addons">
+                  <div className="control">
+                    <input className="input" type="number" value={food.quantity} />
+                  </div>
+                  <div className="control">
+                    <button className="button is-info">
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        )})}
+    </div>
+    )
+  };
 }
 
 
