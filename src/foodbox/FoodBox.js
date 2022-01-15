@@ -7,7 +7,18 @@ import "bulma/css/bulma.css";
 class FoodBox extends React.Component {
   state = {
     addButtonClicked: false,
+    query: "",
     foods: foods
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      query: event.target.value.toLowerCase(),
+    })
+  }
+
+  filterFoods = () => {
+    return this.state.foods.filter(food => food.name.toLowerCase().includes(this.state.query))
   }
 
   addFoodHandler = (newFood) => {
@@ -20,12 +31,21 @@ class FoodBox extends React.Component {
   }
 
   render() {
+    const filteredFoods = this.filterFoods();
+    
     return (
       <div>
+        <input 
+          type="text" 
+          name="search" 
+          value={this.state.search} 
+          onChange={(e) => this.handleChange(e)}
+        />
+        
         <button onClick={() => this.setState({ addButtonClicked: !this.state.addButtonClicked })}>Add food</button>
         {this.state.addButtonClicked && <AddFood addFood={this.addFoodHandler} />}
 
-        {this.state.foods.map((food, idx) => {
+        {filteredFoods.map((food, idx) => {
         return(
           <div key={idx} className="box">
             <article className="media">
