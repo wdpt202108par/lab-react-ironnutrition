@@ -4,6 +4,7 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import foods from './foods.json';
 
+//iteration 1
 class Foodbox extends Component {
   render() {
     return (
@@ -40,12 +41,48 @@ class Foodbox extends Component {
 class App extends Component {
   state = {
     foods: foods,
+    showform: true,
+    foodname: '',
+    calories: '',
   };
+
+  // prevent page refresh
+  handleSubmit = (event) => {
+    event.preventDefault();
+    // Reset formulaire
+    this.setState({
+      foodname: '',
+      calories: '',
+    });
+  };
+
+  handleFoodname = (event) => {
+    this.setState({ foodname: event.target.value });
+  };
+
   render() {
     return (
+      // iteration 2. on va parcourir tous les foods.js
       <div className="App">
+        <button onClick={this.showform}>Add your own food</button>
+        <div>
+          {this.state.showform && (
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                name="foodname"
+                value={this.state.foodname}
+                //control component
+                onChange={this.handleFoodname}
+              />
+            </form>
+          )}
+        </div>
+        {/* [ <FoodBox key="">, <FoodBox key=""> ] */}
         {this.state.foods.map((food) => (
           <Foodbox
+            //il faut ecrire le key!
+            key={food.name}
             image={food.image}
             name={food.name}
             calories={food.calories}
