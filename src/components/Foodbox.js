@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+
 import React, { Component} from 'react';
 
 class Foodbox extends Component {
@@ -10,6 +10,9 @@ class Foodbox extends Component {
         let name = this.props.name;
         let calories = this.props.calories;
         let quantity=this.props.quantity;
+
+    
+        //*this.setState({ quantity: this.state=1});*//
 
 
         return(
