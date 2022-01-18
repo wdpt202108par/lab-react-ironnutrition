@@ -1,5 +1,5 @@
 import React from 'react';
-import FoodBox from './foodbox/FoodBox';
+import FoodList from './foodlist/FoodList';
 import "bulma/css/bulma.css";
 import './App.css';
 
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>IronNutrition</h1>
-        <FoodBox />
+        <FoodList />
       </header>
     </div>
   );

@@ -1,85 +1,48 @@
-import React from 'react';
-import AddFood from '../addfood/AddFood';
-import foods from "../foods.json"
+import React from "react";
 import "bulma/css/bulma.css";
 
 
 class FoodBox extends React.Component {
   state = {
-    addButtonClicked: false,
-    query: "",
-    foods: foods
-  }
-
-  handleChange = (event) => {
-    this.setState({
-      query: event.target.value.toLowerCase(),
-    })
-  }
-
-  filterFoods = () => {
-    return this.state.foods.filter(food => food.name.toLowerCase().includes(this.state.query))
-  }
-
-  addFoodHandler = (newFood) => {
-    const foodsCopy = [...this.state.foods, newFood];
-
-    this.setState({
-      addButtonClicked: false,
-      foods: foodsCopy
-    })
+    name: this.props.name,
+    calories: 0,
+    image: "",
+    quantity: 0
   }
 
   render() {
-    const filteredFoods = this.filterFoods();
-    
     return (
-      <div>
-        <input 
-          type="text" 
-          name="search" 
-          value={this.state.search} 
-          onChange={(e) => this.handleChange(e)}
-        />
-        
-        <button onClick={() => this.setState({ addButtonClicked: !this.state.addButtonClicked })}>Add food</button>
-        {this.state.addButtonClicked && <AddFood addFood={this.addFoodHandler} />}
-
-        {filteredFoods.map((food, idx) => {
-        return(
-          <div key={idx} className="box">
-            <article className="media">
-              <div className="media-left">
-                <figure className="image is-64x64">
-                  <img src={food.image} alt={food.name} />
-                </figure>
-              </div>
-              <div className="media-content">
-                <div className="content">
-                  <p>
-                    <strong>{food.name}</strong> <br />
-                    <small>{food.calories} cal</small>
-                  </p>
-                </div>
-              </div>
-              <div className="media-right">
-                <div className="field has-addons">
-                  <div className="control">
-                    <input className="input" type="number" value={food.quantity} />
-                  </div>
-                  <div className="control">
-                    <button className="button is-info">
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
+      <div key={this.state.name} className="box">
+        <article className="media">
+          <div className="media-left">
+            <figure className="image is-64x64">
+              <img src={this.state.image} alt={this.state.name} />
+            </figure>
           </div>
-        )})}
-    </div>
-    )
-  };
+          <div className="media-content">
+            <div className="content">
+              <p>
+                <strong>{this.state.name}</strong> <br />
+                <small>{this.state.calories} cal</small>
+              </p>
+            </div>
+          </div>
+          <div className="media-right">
+            <div className="field has-addons">
+              <div className="control">
+                <input className="input" type="number" value={this.state.quantity} />
+              </div>
+              <div className="control">
+                <button onClick={() => this.setState({ quantity: this.state.quantity + 1})} className="button is-info">
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    );
+  }
 }
 
 
