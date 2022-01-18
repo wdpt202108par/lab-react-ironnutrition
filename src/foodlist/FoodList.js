@@ -45,8 +45,16 @@ class FoodList extends React.Component {
     this.setState({
       todayFoods: todayFoodsCopy
     })
+  }
 
-    
+  deleteTodayFood = (foodIdx) => {
+    let todayFoodsCopy = [...this.state.todayFoods];
+    todayFoodsCopy.splice(foodIdx, 1);
+
+    this.setState({
+      todayFoods: todayFoodsCopy
+    })
+
   }
 
   render() {
@@ -65,7 +73,7 @@ class FoodList extends React.Component {
         <h2>Today's foods</h2>
 
         <ul>
-          {this.state.todayFoods.map(food => <li key={food.name} >{food.quantity} {food.name} = {food.calories * food.quantity} cal</li>)}
+          {this.state.todayFoods.map((food, idx) => <li key={food.name} >{food.quantity} {food.name} = {food.calories * food.quantity} cal <button onClick={() => this.deleteTodayFood(idx)} class="delete"></button></li>)}
         </ul>
 
         <p>Total: {this.state.todayFoods.length !== 0 ? this.state.todayFoods.reduce((sum, food) => sum + food.calories * food.quantity, 0) : 0} cal</p>
