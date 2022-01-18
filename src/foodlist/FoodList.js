@@ -33,7 +33,14 @@ class FoodList extends React.Component {
   }
 
   addTodayFoodHandler = (newFood) => {
-    const todayFoodsCopy = [...this.state.todayFoods, newFood];
+    let todayFoodsCopy = [...this.state.todayFoods];
+    let isNewFoodInArray = todayFoodsCopy.find(food => food.name === newFood.name);
+
+    if (isNewFoodInArray) {
+      isNewFoodInArray.quantity += newFood.quantity;
+    } else {
+      todayFoodsCopy = [...todayFoodsCopy, newFood];
+    }
 
     this.setState({
       todayFoods: todayFoodsCopy
