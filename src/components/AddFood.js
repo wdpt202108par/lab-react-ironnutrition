@@ -18,7 +18,6 @@ class AddFood extends Component {
       showform: true,
       foodname: '',
       calories: '',
-      input: '',
     });
   };
 

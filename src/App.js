@@ -4,6 +4,7 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import foods from './foods.json';
 import AddFood from './components/AddFood';
+import SearchBar from './components/SearchBar';
 
 //iteration 1
 class Foodbox extends Component {
@@ -42,7 +43,18 @@ class Foodbox extends Component {
 class App extends Component {
   state = {
     foods: foods,
+    filteredFood: foods,
     showform: true,
+  };
+
+  filterFood = (foodFiltered) => {
+    const newFilter = this.state.foods.filter((food) => {
+      return food.name.toLowerCase().includes(foodFiltered.toLowerCase());
+    });
+    console.log(foodFiltered);
+    this.setState({
+      filteredFood: newFilter,
+    });
   };
 
   addFood = (newFood) => {
@@ -63,9 +75,10 @@ class App extends Component {
     return (
       // iteration 2. on va parcourir tous les foods.js
       <div className="App">
+        <SearchBar filterFood={this.filterFood}></SearchBar>
         <div>{<AddFood addFood={this.addFood} />}</div>
         {/* [ <FoodBox key="">, <FoodBox key=""> ] */}
-        {this.state.foods.map((food) => (
+        {this.state.filteredFood.map((food) => (
           <Foodbox
             //il faut ecrire le key!
             key={food.name}
@@ -74,8 +87,6 @@ class App extends Component {
             calories={food.calories}
           />
         ))}
-
-        <div className="search-bar"></div>
       </div>
     );
   }
