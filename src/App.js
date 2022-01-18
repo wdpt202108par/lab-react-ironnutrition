@@ -3,6 +3,7 @@ import './App.css';
 import 'bulma/css/bulma.css';
 import json from './foods.json';
 import FoodBox from './FoodBox';
+import SearchBox from './SearchBox';
 
 
 class App extends React.Component {
@@ -51,7 +52,14 @@ class App extends React.Component {
     })
   }
 
-
+  searchResultsHandler = (search) => {
+    const foodsArrayResults = this.state.foods.slice();
+    const results = foodsArrayResults.filter((food) => food.name.toLowerCase().includes(search.toLowerCase()))
+    console.log("results=", results)
+    this.setState({
+      foods: results
+    })
+  }
 
   render() {
     return (
@@ -83,6 +91,8 @@ class App extends React.Component {
             <button>Submit</button>
           </form>
         )}
+
+        <SearchBox searchResults={this.searchResultsHandler} />
 
         {this.state.foods.map((food) => {
           return(
