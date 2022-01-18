@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css';
 import foods from './foods.json';
+import AddFood from './components/AddFood';
 
 //iteration 1
 class Foodbox extends Component {
@@ -42,26 +43,19 @@ class App extends Component {
   state = {
     foods: foods,
     showform: true,
-    foodname: '',
-    calories: '',
-    input: '', // for the searchbar(iteration 4)
   };
 
-  // prevent page refresh
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // Reset formulaire
-
+  addFood = (newFood) => {
+    // Reset formulaire\
+    //copy
+    //let copyFoods = this.state.foods.slice();
+    //copyFoods.push(this.state.foodname)
     this.setState({
-      showform: true,
-      foodname: '',
-      calories: '',
-      input: '',
+      foods: [
+        ...this.state.foods,
+        { name: newFood.foodname, calories: newFood.calories },
+      ],
     });
-  };
-
-  handleFoodname = (event) => {
-    this.setState({ foodname: event.target.value });
   };
 
   //iteration 3
@@ -69,23 +63,7 @@ class App extends Component {
     return (
       // iteration 2. on va parcourir tous les foods.js
       <div className="App">
-        <button onClick={() => this.state.showform}>Add your own food</button>
-        <div>
-          {
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                Name:
-                <input
-                  type="text"
-                  name="this.foodname"
-                  value={this.state.foodname}
-                  //control component
-                  onChange={this.handleFoodname}
-                />
-              </label>
-            </form>
-          }
-        </div>
+        <div>{<AddFood addFood={this.addFood} />}</div>
         {/* [ <FoodBox key="">, <FoodBox key=""> ] */}
         {this.state.foods.map((food) => (
           <Foodbox
