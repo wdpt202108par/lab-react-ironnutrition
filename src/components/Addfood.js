@@ -1,4 +1,5 @@
 
+
 import React, { Component} from 'react';
 
 class AddFood extends Component {
@@ -20,6 +21,7 @@ class AddFood extends Component {
       };
     
       handleCaloriesInput = (event) => {
+          console.log('coucou')
         this.setState({ calories: event.target.value });
       };
 
@@ -37,18 +39,22 @@ class AddFood extends Component {
                     />
 
                     <input
-                        type="text"
+                        type="number"
                         name="calories"
                         value={this.state.calories}
                         onChange={this.handleCaloriesInput}
                     />
 
-                    <button>Create New food</button>
+                    <button onClick={(event) => {
+                        this.props.sendfood(this.state) // executait la fonction callme du parent
+                    }}>Create New food</button>
                 </form>
             </div>
-        )
+        );
     }
     
 }
 
     export default AddFood;
+
+    
