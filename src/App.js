@@ -12,7 +12,10 @@ class App extends React.Component {
     name:'',
     calories:'',
     image:'',
-    displayForm : false
+    quantity:'',
+    displayForm : false,
+    query: "",
+    cart:[] // [ {name: 'Pizza', quantity: 2}, ... ]
   }
 
   handleSubmit = (event) => {
@@ -48,20 +51,31 @@ class App extends React.Component {
     const foodsCopy = this.state.foods.slice();
     foodsCopy.push(addedfood);
     this.setState({
-      foods: foodsCopy
+      foods: foodsCopy,
     })
   }
 
   searchResultsHandler = (search) => {
-    const foodsArrayResults = this.state.foods.slice();
-    const results = foodsArrayResults.filter((food) => food.name.toLowerCase().includes(search.toLowerCase()))
-    console.log("results=", results)
     this.setState({
-      foods: results
+      query: search
+    })
+  }
+
+  setQuery = (val) => {
+    this.setState({query: val})
+  }
+
+  todaysfood = (event) => {
+    // const foodsTer = this.state.foods.slice();
+    const tF = this.cart.push(event.target.value);
+    this.setState({
+      cart: tF
     })
   }
 
   render() {
+    const filteredFoods = this.state.foods.filter((food) => food.name.toLowerCase().includes(this.state.query.toLowerCase()))
+
     return (
       <div className="App">
         <button onClick={(event) => {
@@ -92,13 +106,22 @@ class App extends React.Component {
           </form>
         )}
 
-        <SearchBox searchResults={this.searchResultsHandler} />
-
-        {this.state.foods.map((food) => {
-          return(
-            <FoodBox key={`${food.name}-${food.calories}`} image={food.image} name={food.name} calories={food.calories}/>
-          )
-        })}
+        <SearchBox query={this.state.query} setQuery={this.setQuery} />
+        <div className="columns">
+          <div className="column">
+            {filteredFoods.map((food) => {
+            return(
+              <FoodBox handleClick={this.todaysfood} key={`${food.name}-${food.calories}`} image={food.image} name={food.name} calories={food.calories}/>
+            )
+          })}
+          </div>
+          <div className="column">
+            <h1>Today's foods</h1>
+            <ul>
+              <li>{this.tF}</li>
+            </ul>
+          </div>
+        </div>
       </div>
     );
   }
