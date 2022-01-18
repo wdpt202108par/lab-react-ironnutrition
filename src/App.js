@@ -44,15 +44,19 @@ class App extends Component {
     showform: true,
     foodname: '',
     calories: '',
+    input: '', // for the searchbar(iteration 4)
   };
 
   // prevent page refresh
   handleSubmit = (event) => {
     event.preventDefault();
     // Reset formulaire
+
     this.setState({
+      showform: true,
       foodname: '',
       calories: '',
+      input: '',
     });
   };
 
@@ -60,23 +64,27 @@ class App extends Component {
     this.setState({ foodname: event.target.value });
   };
 
+  //iteration 3
   render() {
     return (
       // iteration 2. on va parcourir tous les foods.js
       <div className="App">
-        <button onClick={this.showform}>Add your own food</button>
+        <button onClick={() => this.state.showform}>Add your own food</button>
         <div>
-          {this.state.showform && (
+          {
             <form onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                name="foodname"
-                value={this.state.foodname}
-                //control component
-                onChange={this.handleFoodname}
-              />
+              <label>
+                Name:
+                <input
+                  type="text"
+                  name="this.foodname"
+                  value={this.state.foodname}
+                  //control component
+                  onChange={this.handleFoodname}
+                />
+              </label>
             </form>
-          )}
+          }
         </div>
         {/* [ <FoodBox key="">, <FoodBox key=""> ] */}
         {this.state.foods.map((food) => (
@@ -88,6 +96,8 @@ class App extends Component {
             calories={food.calories}
           />
         ))}
+
+        <div className="search-bar"></div>
       </div>
     );
   }
