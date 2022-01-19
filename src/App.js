@@ -12,7 +12,7 @@ class App extends React.Component {
     name:'',
     calories:'',
     image:'',
-    quantity:'',
+    quantity:1,
     displayForm : false,
     query: "",
     cart:[] // [ {name: 'Pizza', quantity: 2}, ... ]
@@ -65,17 +65,18 @@ class App extends React.Component {
     this.setState({query: val})
   }
 
-  todaysfood = (event) => {
-    // const foodsTer = this.state.foods.slice();
-    const tF = this.cart.push(event.target.value);
+  todaysfood = (tF) => {
+    const cartCopy = this.state.cart.slice();
+    cartCopy.push(tF);
     this.setState({
-      cart: tF
+      cart: cartCopy
     })
   }
 
   render() {
     const filteredFoods = this.state.foods.filter((food) => food.name.toLowerCase().includes(this.state.query.toLowerCase()))
-
+    const sum = this.state.cart.map(listedfood => listedfood.calories * listedfood.quantity).reduce((a,b) => (a + b),0)
+    
     return (
       <div className="App">
         <button onClick={(event) => {
@@ -111,15 +112,22 @@ class App extends React.Component {
           <div className="column">
             {filteredFoods.map((food) => {
             return(
-              <FoodBox handleClick={this.todaysfood} key={`${food.name}-${food.calories}`} image={food.image} name={food.name} calories={food.calories}/>
+              <FoodBox today={this.todaysfood} key={`${food.name}-${food.calories}`} image={food.image} name={food.name} calories={food.calories}/>
             )
           })}
           </div>
           <div className="column">
             <h1>Today's foods</h1>
-            <ul>
-              <li>{this.tF}</li>
-            </ul>
+            {this.state.cart.map((listedfood, index) => {
+              return (
+                <ul key={`${listedfood.name}-${listedfood.calories}-${index}`}>
+                  <li >
+                    {listedfood.quantity} {listedfood.name} = {listedfood.quantity * listedfood.calories} cal
+                  </li>
+                </ul>
+              )
+            })}
+            <h2>Total: {sum} cal</h2>
           </div>
         </div>
       </div>

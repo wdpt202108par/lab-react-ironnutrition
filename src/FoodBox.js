@@ -2,9 +2,9 @@ import React from 'react';
 
 class FoodBox extends React.Component {
   state = {
-    count: 1,
-    name:'',
-    quantity:''
+    quantity: 1,
+    name:this.props.name,
+    calories: this.props.calories
   }
 
   handleChange = (event) => {
@@ -14,13 +14,13 @@ class FoodBox extends React.Component {
   }
 
   handleClick = (event) => {
-    let {name, count, quantity, value} = event.target;
+    event.preventDefault();
+    this.props.today(this.state);
     this.setState({
-      [name]: value, 
-      [count]: value, 
-      [quantity]: value
+      quantity:1,
+      name:this.props.name,
+      calories: this.props.calories
     })
-    this.state.todaysfood(this.state)
   }
   
     render(){
