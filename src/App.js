@@ -8,6 +8,7 @@ import json from './foods.json';
 import Foodbox from './components/Foodbox';
 import AddFood from './components/Addfood';
 import { render } from '@testing-library/react';
+import SearchBar from './components/searchBar';
 
 class App extends React.Component{
   state= {
@@ -16,6 +17,8 @@ class App extends React.Component{
 /* 1. définir un state */
     addingFood: false,
   }
+
+
 
   addNewFood = (newFood) => {
     // newFood : {name: 'Laitue', calories: 400}
@@ -27,6 +30,7 @@ class App extends React.Component{
     });
   }
 
+  
 
 /**/ 
 /* 2. condition si click sur le button alors addingfood =true */
@@ -37,13 +41,12 @@ class App extends React.Component{
 
         <h1>Let's see our foodbox</h1> 
 
+        <SearchBar />
+
         <button onClick={event => this.setState({addingFood: !this.state.addingFood})}> Create Food </button>
         {
           this.state.addingFood && <AddFood addFood={this.addFood} sendfood={this.addNewFood} />
         }
-        
-        
-
         
 
         { json.map((el) => {

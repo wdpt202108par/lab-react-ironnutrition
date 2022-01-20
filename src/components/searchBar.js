@@ -1,5 +1,6 @@
+// Brainstorming with Cleiton//
 
-import React, { Component} from 'react';
+import React, {Component} from 'react';
 
 class SearchBar extends React.Component {
     constructor(props){
