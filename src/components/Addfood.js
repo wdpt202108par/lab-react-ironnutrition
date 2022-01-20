@@ -13,7 +13,7 @@ class AddFood extends Component {
     handleSubmit = (event) => {
         event.preventDefault(); // prevent page refresh
 
-        this.props.addTheFood(this.state);
+        this.props.onAdd(this.state);
     };
 
     handleNameInput = (event) => {

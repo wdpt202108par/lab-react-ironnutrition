@@ -23,19 +23,28 @@ class App extends React.Component{
     // ajouter newFood au tableau this.state.foods
     this.setState({
       foods: [...this.state.foods, newFood],
-    })
+      addingFood: false
+    });
   }
 
+
+/**/ 
 /* 2. condition si click sur le button alors addingfood =true */
   render() {
+
     return (
       <div className="App">
+
         <h1>Let's see our foodbox</h1> 
 
         <button onClick={event => this.setState({addingFood: !this.state.addingFood})}> Create Food </button>
         {
           this.state.addingFood && <AddFood addFood={this.addFood} sendfood={this.addNewFood} />
         }
+        
+        
+
+        
 
         { json.map((el) => {
             return (
