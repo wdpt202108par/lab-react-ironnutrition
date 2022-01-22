@@ -6,7 +6,7 @@ class Foodbox extends React.Component {
   }
 
   hangleQty = (ev) => {
-    this.setState({qty: this.state.qty+1})
+    this.setState({qty: ev.target.value})
   }
 
   render() {
